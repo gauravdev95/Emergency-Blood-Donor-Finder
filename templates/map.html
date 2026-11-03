@@ -1,4 +1,7 @@
-{% extends "base.html" %}{% block content %}
+{% extends "base.html" %}
+{% block head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>{% endblock %}
+{% block content %}
 <div class="card"><h1>Nearby Donors Map (Agra)</h1><p class="lead">Markers = registered donors. Click a marker for group &amp; locality. Phones are masked here unless the donor consented.</p>
 <div id="map"></div></div>
 <script>async function load(){const donors=await (await fetch('/api/donors')).json();

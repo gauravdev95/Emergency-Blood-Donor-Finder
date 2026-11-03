@@ -13,8 +13,20 @@
   --font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:var(--font);color:var(--ink);line-height:1.6;
+  /* OFFLINE healthcare background: pure CSS + embedded SVG, no online image/font.
+     Soft medical-plus pattern over a rose gradient — loads instantly offline. */
+  background-color:var(--bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cpath d='M42 18h12v24h24v12H54v24H42V54H18V42h24z' fill='%23fecaca' fill-opacity='0.28'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,#fff7f7 0%,#fef2f2 45%,#fff7f7 100%);
+  background-repeat:repeat,no-repeat;background-size:96px 96px,100% 100%;
+  background-attachment:scroll,scroll}
+/* Clean, thin scrollbar — scroll feels proper on long pages */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#fee2e2}
+::-webkit-scrollbar-thumb{background:#dc2626;border-radius:999px;border:2px solid #fee2e2}
+::-webkit-scrollbar-thumb:hover{background:#991b1b}
 a{color:var(--red)}
 a:hover{color:var(--red-dark)}
 
@@ -53,7 +65,11 @@ main{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
 .hero{background:linear-gradient(120deg,#7f1d1d 0%,#c81e1e 55%,#ef4444 100%);
   color:#fff;border-radius:22px;padding:40px 36px;margin:8px 0 18px;
   box-shadow:0 20px 40px rgba(153,27,27,.30);position:relative;overflow:hidden}
-.hero::after{content:"🩸";position:absolute;right:26px;top:50%;transform:translateY(-50%);
+.hero::after{content:"";position:absolute;right:-20px;top:-20px;bottom:-20px;width:340px;
+  /* Offline heartbeat (ECG) line, drawn as embedded SVG — no image download */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'%3E%3Cpath d='M0 100h70l20-55 30 110 20-70 15 35h35l20-55 25 90 15-35h90' fill='none' stroke='white' stroke-opacity='0.35' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M250 40h28v28h28v28h-28v28h-28v-28h-28V68h28z' fill='white' fill-opacity='0.18'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;pointer-events:none}
+.hero::before{content:"🩸";position:absolute;right:26px;top:50%;transform:translateY(-50%);
   font-size:120px;opacity:.14;pointer-events:none}
 .hero h1{font-size:clamp(28px,4.5vw,44px);line-height:1.12;margin:0 0 12px;max-width:680px;
   letter-spacing:-.02em}
@@ -108,6 +124,13 @@ tbody tr:hover{background:#fffafa}
 .warn{background:var(--amber-soft);border:1px solid #fde68a;border-radius:12px;padding:14px 16px}
 #out .card{animation:fadeUp .3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Back to top (offline, inline JS in base.html) ---------- */
+.to-top{position:fixed;right:20px;bottom:20px;z-index:60;width:48px;height:48px;border-radius:50%;
+  border:0;background:var(--red);color:#fff;font-size:20px;cursor:pointer;display:none;
+  box-shadow:0 8px 20px rgba(220,38,38,.45)}
+.to-top:hover{background:var(--red-dark)}
+.to-top.show{display:block}
 
 /* ---------- Map, footer ---------- */
 #map{height:460px;border-radius:14px;border:1px solid var(--line);z-index:1}

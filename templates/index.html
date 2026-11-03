@@ -22,6 +22,16 @@
 <div class="card feature"><div class="icon">🗺️</div><h3>Real road routes</h3><p>Dijkstra on the Agra locality graph, not just straight-line distance.</p></div>
 <div class="card feature"><div class="icon">🔒</div><h3>Privacy-first</h3><p>Phones stay masked unless the donor gave explicit contact consent.</p></div></div>
 
+<div class="card"><h2>Tools used in this project</h2><p class="lead">Everything below is part of the actual stack — no extra tool is shown just for decoration.</p>
+<div class="grid">
+<div class="feature"><div class="icon">🐍</div><h3>Python + Flask</h3><p>Backend, routes and APIs.</p></div>
+<div class="feature"><div class="icon">🗄️</div><h3>SQLite</h3><p>Donor and blood-request database.</p></div>
+<div class="feature"><div class="icon">🧠</div><h3>DSA Engine</h3><p>HashMap, Graph, Dijkstra, Min-Heap, Haversine.</p></div>
+<div class="feature"><div class="icon">🗺️</div><h3>Leaflet + OpenStreetMap</h3><p>Donor map (Map page only).</p></div>
+<div class="feature"><div class="icon">🎨</div><h3>HTML + CSS + JS</h3><p>Offline-first design — system fonts, embedded SVG background, no online images.</p></div>
+<div class="feature"><div class="icon">🩸</div><h3>Blood Compatibility</h3><p>Standard donor → recipient rules, hospital confirmation still required.</p></div>
+</div></div>
+
 <div class="card"><h2>Quick search</h2><p class="lead">Pick a blood group and locality to see the nearest donors right away.</p>
 <form action="/find" method="get"><label>Blood group needed</label>
 <select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
