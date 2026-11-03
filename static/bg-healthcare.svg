@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eaf7fc"/>
+      <stop offset="45%" stop-color="#f6fcfe"/>
+      <stop offset="100%" stop-color="#dff2f9"/>
+    </linearGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5bb8d9"/>
+      <stop offset="100%" stop-color="#2f8fb8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <!-- soft light blobs, centre stays clean for text -->
+  <circle cx="820" cy="380" r="340" fill="#ffffff" opacity="0.55"/>
+  <circle cx="300" cy="200" r="180" fill="#ffffff" opacity="0.35"/>
+
+  <!-- ===== Blue leaves, bottom-left (like the reference image) ===== -->
+  <g>
+    <g transform="translate(60,900) rotate(-38)"><path d="M0,0 C45,-55 120,-70 175,-25 C130,35 45,45 0,0 Z" fill="#3a9cc0"/><path d="M8,-4 C60,-8 115,2 165,-18" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/></g>
+    <g transform="translate(150,900) rotate(-18)"><path d="M0,0 C40,-50 115,-60 165,-15 C120,40 40,42 0,0 Z" fill="#7ecbe8"/><path d="M8,-4 C55,-6 105,2 155,-12" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/></g>
+    <g transform="translate(20,760) rotate(-62)"><path d="M0,0 C35,-45 100,-55 150,-15 C110,35 35,38 0,0 Z" fill="#5bb8d9"/><path d="M8,-4 C50,-6 95,0 140,-12" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/></g>
+    <g transform="translate(230,900) rotate(-5)"><path d="M0,0 C35,-40 95,-48 140,-12 C105,32 35,34 0,0 Z" fill="#a5dcee"/><path d="M8,-3 C45,-5 85,0 130,-10" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.7"/></g>
+    <g transform="translate(90,650) rotate(-80)"><path d="M0,0 C30,-38 85,-46 125,-12 C90,28 30,30 0,0 Z" fill="#2f8fb8"/><path d="M8,-3 C40,-5 75,0 115,-10" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.6"/></g>
+    <g transform="translate(300,820) rotate(-30)"><path d="M0,0 C30,-35 85,-42 125,-10 C90,28 30,30 0,0 Z" fill="#8fd3ec"/></g>
+  </g>
+
+  <!-- small leaves, top-right near the stethoscope -->
+  <g opacity="0.9">
+    <g transform="translate(1420,60) rotate(25)"><path d="M0,0 C30,-35 85,-42 125,-10 C90,28 30,30 0,0 Z" fill="#7ecbe8"/></g>
+    <g transform="translate(1520,180) rotate(55)"><path d="M0,0 C30,-35 85,-42 125,-10 C90,28 30,30 0,0 Z" fill="#a5dcee"/></g>
+    <g transform="translate(1560,300) rotate(75)"><path d="M0,0 C25,-30 70,-36 105,-8 C75,25 25,26 0,0 Z" fill="#5bb8d9"/></g>
+  </g>
+
+  <!-- ===== Stethoscope, top-right (like the reference image) ===== -->
+  <g fill="none" stroke-linecap="round">
+    <!-- earpiece stems -->
+    <path d="M1245,95 C1245,180 1210,260 1275,330" stroke="#64748b" stroke-width="7"/>
+    <path d="M1375,75 C1375,165 1410,250 1345,330" stroke="#64748b" stroke-width="7"/>
+    <!-- ear tips -->
+    <circle cx="1245" cy="90" r="16" fill="#2f8fb8" stroke="#1e6f94" stroke-width="3"/>
+    <circle cx="1375" cy="70" r="16" fill="#2f8fb8" stroke="#1e6f94" stroke-width="3"/>
+    <!-- Y tube merging into one tube, curving down to the chest piece -->
+    <path d="M1275,330 C1305,380 1335,380 1345,330" stroke="url(#tube)" stroke-width="10"/>
+    <path d="M1310,375 C1310,470 1420,480 1420,560 C1420,620 1365,650 1335,640" stroke="url(#tube)" stroke-width="11"/>
+    <!-- chest piece -->
+    <ellipse cx="1335" cy="665" rx="58" ry="12" fill="#7ecbe8" opacity="0.35"/>
+    <circle cx="1315" cy="645" r="56" fill="#eaf7fc" stroke="#2f8fb8" stroke-width="9"/>
+    <circle cx="1315" cy="645" r="30" fill="#dbeafe" stroke="#94a3b8" stroke-width="4"/>
+    <circle cx="1315" cy="645" r="10" fill="#64748b"/>
+  </g>
+</svg>

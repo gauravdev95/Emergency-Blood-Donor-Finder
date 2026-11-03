@@ -15,13 +15,14 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{margin:0;font-family:var(--font);color:var(--ink);line-height:1.6;
-  /* OFFLINE healthcare background: pure CSS + embedded SVG, no online image/font.
-     Soft medical-plus pattern over a rose gradient — loads instantly offline. */
-  background-color:var(--bg);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cpath d='M42 18h12v24h24v12H54v24H42V54H18V42h24z' fill='%23fecaca' fill-opacity='0.28'/%3E%3C/svg%3E"),
-    linear-gradient(180deg,#fff7f7 0%,#fef2f2 45%,#fff7f7 100%);
-  background-repeat:repeat,no-repeat;background-size:96px 96px,100% 100%;
-  background-attachment:scroll,scroll}
+  /* Healthcare background in the reference-image style: pale blue, blue
+     leaves bottom-left, stethoscope top-right. It is a LOCAL vector file
+     (static/bg-healthcare.svg) — sharp at any size, loads fully offline,
+     no online image or font. The old + icon pattern is removed. */
+  background-color:#eaf7fc;
+  background-image:url("bg-healthcare.svg");
+  background-repeat:no-repeat;background-size:cover;
+  background-position:center top;background-attachment:fixed}
 /* Clean, thin scrollbar — scroll feels proper on long pages */
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:#fee2e2}
@@ -62,26 +63,22 @@ main{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
 .stat p{color:var(--muted);margin:6px 0 0;font-weight:600}
 
 /* ---------- Hero ---------- */
-.hero{background:linear-gradient(120deg,#7f1d1d 0%,#c81e1e 55%,#ef4444 100%);
+.hero{background:linear-gradient(120deg,#075985 0%,#0284c7 55%,#38bdf8 100%);
   color:#fff;border-radius:22px;padding:40px 36px;margin:8px 0 18px;
-  box-shadow:0 20px 40px rgba(153,27,27,.30);position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;right:-20px;top:-20px;bottom:-20px;width:340px;
-  /* Offline heartbeat (ECG) line, drawn as embedded SVG — no image download */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='200' viewBox='0 0 340 200'%3E%3Cpath d='M0 100h70l20-55 30 110 20-70 15 35h35l20-55 25 90 15-35h90' fill='none' stroke='white' stroke-opacity='0.35' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M250 40h28v28h28v28h-28v28h-28v-28h-28V68h28z' fill='white' fill-opacity='0.18'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:center;pointer-events:none}
+  box-shadow:0 20px 40px rgba(2,132,199,.30);position:relative;overflow:hidden}
 .hero::before{content:"🩸";position:absolute;right:26px;top:50%;transform:translateY(-50%);
   font-size:120px;opacity:.14;pointer-events:none}
 .hero h1{font-size:clamp(28px,4.5vw,44px);line-height:1.12;margin:0 0 12px;max-width:680px;
   letter-spacing:-.02em}
 .hero p{font-size:18px;opacity:.94;max-width:660px;margin:0 0 22px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
-.hero .btn2{background:#fff;color:var(--red-dark);border-color:#fff}
-.hero .btn2:hover{background:#fef2f2}
+.hero .btn2{background:#fff;color:#075985;border-color:#fff}
+.hero .btn2:hover{background:#e0f2fe}
 
 /* ---------- Steps / features ---------- */
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:6px}
-.step{background:var(--red-soft);border:1px solid var(--red-line);border-radius:14px;padding:18px}
-.step-num{width:34px;height:34px;border-radius:50%;background:var(--red);color:#fff;
+.step{background:#e0f2fe;border:1px solid #bae6fd;border-radius:14px;padding:18px}
+.step-num{width:34px;height:34px;border-radius:50%;background:#0284c7;color:#fff;
   display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:10px}
 .step h3{margin:0 0 4px;font-size:16px}
 .step p{margin:0;color:var(--muted);font-size:14.5px}

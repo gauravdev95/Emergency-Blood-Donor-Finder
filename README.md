@@ -14,6 +14,11 @@ python app.py       # -> http://127.0.0.1:5000
 Pages: `/` Home · `/register` Donor registration · `/request` Blood request ·
 `/find` Find donors · `/map` Leaflet/OpenStreetMap donor map · `/admin` Admin dashboard
 
+Design: the page background is a local vector file, `static/bg-healthcare.svg`
+(pale-blue healthcare scene: blue leaves bottom-left, stethoscope top-right,
+in the style of the reference image). It loads fully offline and stays sharp
+at any screen size — no online image or font is used for the design.
+
 ## DSA implemented (in `dsa.py`, explained for viva)
 
 | Concept | Where / how |
