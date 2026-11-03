@@ -71,6 +71,15 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.json["count"], 1)  # unavailable donor excluded
 
+    def test_unencoded_plus_group(self):
+        # Regression test for the screenshot bug: a raw '+' in a query
+        # string is decoded as a space by the server ("O+" -> "O ").
+        # The API must still return the O+ donors, not a 400 error.
+        r = self.client.get("/api/search?blood_group=O+&locality=Civil Lines")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json["blood_group"], "O+")
+        self.assertGreater(r.json["count"], 0)
+
     def test_no_matching_donors(self):
         r = self.client.get("/api/search", query_string={"blood_group": "AB-", "locality": "Civil Lines"})
         self.assertEqual(r.status_code, 200); self.assertEqual(r.json["count"], 0)

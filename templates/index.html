@@ -1,6 +1,6 @@
 {% extends "base.html" %}{% block content %}
 <div class="hero"><h1>Find a blood donor fast, in an emergency.</h1>
-<p>Search by blood group and location. Donors are ranked nearest-first using a HashMap lookup, Dijkstra road routes and a Min-Heap — so the closest compatible donor shows up first.</p>
+<p>Search by blood group and location, and get the nearest available donors first — when every minute matters.</p>
 <div class="hero-actions"><a class="btn2" href="/find">🔍 Find Donors Now</a> <a class="btn2" href="/register">❤️ Register as Donor</a></div></div>
 
 <div class="grid">
@@ -8,29 +8,10 @@
 <div class="card stat"><h2>{{ stats['a'] }}</h2><p>Available now</p></div>
 <div class="card stat"><h2>{{ stats['r'] }}</h2><p>Blood requests</p></div></div>
 
-<div class="card"><h2>How it works</h2>
-<div class="steps">
-<div class="step"><div class="step-num">1</div><h3>Request</h3><p>Enter the blood group needed and the patient's locality.</p></div>
-<div class="step"><div class="step-num">2</div><h3>Match</h3><p>HashMap finds compatible donors instantly, unavailable donors are filtered out.</p></div>
-<div class="step"><div class="step-num">3</div><h3>Rank</h3><p>Dijkstra road distance + Min-Heap puts the nearest donor first.</p></div>
-<div class="step"><div class="step-num">4</div><h3>Contact</h3><p>Reach donors who consented to share their contact details.</p></div>
-</div>
-<p class="warn" style="margin-top:18px">Example: a patient in Agra needing <b>O+</b> gets compatible donors (O+ and O−) ranked by distance — e.g. Sikandra, Kamla Nagar, Dayal Bagh — with incompatible groups filtered out.</p></div>
-
 <div class="grid">
 <div class="card feature"><div class="icon">⚡</div><h3>Fast in emergencies</h3><p>No scrolling through lists — nearest compatible donors first, every time.</p></div>
-<div class="card feature"><div class="icon">🗺️</div><h3>Real road routes</h3><p>Dijkstra on the Agra locality graph, not just straight-line distance.</p></div>
+<div class="card feature"><div class="icon">🗺️</div><h3>Real road distance</h3><p>Ranked by actual road distance from the patient, not just straight-line distance.</p></div>
 <div class="card feature"><div class="icon">🔒</div><h3>Privacy-first</h3><p>Phones stay masked unless the donor gave explicit contact consent.</p></div></div>
-
-<div class="card"><h2>Tools used in this project</h2><p class="lead">Everything below is part of the actual stack — no extra tool is shown just for decoration.</p>
-<div class="grid">
-<div class="feature"><div class="icon">🐍</div><h3>Python + Flask</h3><p>Backend, routes and APIs.</p></div>
-<div class="feature"><div class="icon">🗄️</div><h3>SQLite</h3><p>Donor and blood-request database.</p></div>
-<div class="feature"><div class="icon">🧠</div><h3>DSA Engine</h3><p>HashMap, Graph, Dijkstra, Min-Heap, Haversine.</p></div>
-<div class="feature"><div class="icon">🗺️</div><h3>Leaflet + OpenStreetMap</h3><p>Donor map (Map page only).</p></div>
-<div class="feature"><div class="icon">🎨</div><h3>HTML + CSS + JS</h3><p>Offline-first design — system fonts, embedded SVG background, no online images.</p></div>
-<div class="feature"><div class="icon">🩸</div><h3>Blood Compatibility</h3><p>Standard donor → recipient rules, hospital confirmation still required.</p></div>
-</div></div>
 
 <div class="card"><h2>Quick search</h2><p class="lead">Pick a blood group and locality to see the nearest donors right away.</p>
 <form action="/find" method="get"><label>Blood group needed</label>

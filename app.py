@@ -135,6 +135,10 @@ def api_register():
 @app.route("/api/search")
 def api_search():
     group = (request.args.get("blood_group") or "").strip().upper()
+    # Safety net for an unencoded '+' in the URL: browsers/servers turn a
+    # raw '+' in a query string into a space, so "O+" arrives as "O ".
+    # Bare O/A/B/AB are not valid groups anyway, so map them to the + form.
+    group = {"O": "O+", "A": "A+", "B": "B+", "AB": "AB+"}.get(group, group)
     if group not in VALID_GROUPS:
         return jsonify({"error": f"Invalid blood group. Use one of: {', '.join(VALID_GROUPS)}"}), 400
     locality = request.args.get("locality") or None

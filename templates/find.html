@@ -7,7 +7,7 @@
 <div id="out"></div>
 <script>async function search(){const bg=document.getElementById('bg').value,loc=document.getElementById('loc').value;
 const ex=document.getElementById('exact').checked?'&exact_only=1':'';
-const r=await fetch(`/api/search?blood_group=${bg}&locality=${encodeURIComponent(loc)}${ex}`);
+const r=await fetch(`/api/search?blood_group=${encodeURIComponent(bg)}&locality=${encodeURIComponent(loc)}${ex}`);
 const j=await r.json();const out=document.getElementById('out');
 if(!r.ok){out.innerHTML=`<div class="card">❌ ${j.error}</div>`;return;}
 if(!j.count){out.innerHTML=`<div class="card"><h2>No matching donors found</h2><p>Try another locality, or submit a <a href="/request">blood request</a> so admin can help coordinate.</p></div>`;return;}
