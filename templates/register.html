@@ -1,5 +1,5 @@
 {% extends "base.html" %}{% block content %}
-<div class="card"><h1>Register as a Donor</h1><p id="msg"></p>
+<div class="card"><h1>Register as a Donor</h1><p class="lead">One registration can save a life in an emergency. Your phone is shared only if you tick consent below.</p><p id="msg"></p>
 <form id="f"><label>Name</label><input name="name" required>
 <label>Blood group</label><select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
 <label>Locality (Agra)</label><select name="locality">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>

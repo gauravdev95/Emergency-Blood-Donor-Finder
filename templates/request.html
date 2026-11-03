@@ -1,5 +1,5 @@
 {% extends "base.html" %}{% block content %}
-<div class="card"><h1>Emergency Blood Request</h1><p id="msg"></p>
+<div class="card"><h1>Emergency Blood Request</h1><p class="lead">Submit the requirement and you will be taken straight to the nearest compatible donors.</p><p id="msg"></p>
 <form id="f"><label>Patient name</label><input name="patient_name" required>
 <label>Blood group needed</label><select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
 <label>Hospital</label><input name="hospital">

@@ -1,5 +1,5 @@
 {% extends "base.html" %}{% block content %}
-<div class="card"><h1>Find Nearest Donors</h1>
+<div class="card"><h1>Find Nearest Donors</h1><p class="lead">Results are ranked nearest-first. Unavailable and incompatible donors never appear.</p>
 <form id="f"><label>Blood group needed</label><select name="blood_group" id="bg">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
 <label>Patient locality</label><select name="locality" id="loc">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
 <label><input type="checkbox" id="exact" style="width:auto"> Exact blood group only (skip other compatible groups)</label>

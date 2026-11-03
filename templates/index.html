@@ -1,18 +1,31 @@
 {% extends "base.html" %}{% block content %}
 <div class="hero"><h1>Find a blood donor fast, in an emergency.</h1>
-<p>Search by blood group and location. Donors are ranked nearest-first using a HashMap lookup, Dijkstra road routes and a Min-Heap.</p>
-<a class="btn2" href="/find">🔍 Find Donors Now</a> &nbsp; <a class="btn2" href="/register">❤️ Register as Donor</a></div>
+<p>Search by blood group and location. Donors are ranked nearest-first using a HashMap lookup, Dijkstra road routes and a Min-Heap — so the closest compatible donor shows up first.</p>
+<div class="hero-actions"><a class="btn2" href="/find">🔍 Find Donors Now</a> <a class="btn2" href="/register">❤️ Register as Donor</a></div></div>
+
 <div class="grid">
-<div class="card"><h2>{{ stats['d'] }}</h2><p>Registered donors</p></div>
-<div class="card"><h2>{{ stats['a'] }}</h2><p>Available now</p></div>
-<div class="card"><h2>{{ stats['r'] }}</h2><p>Blood requests</p></div></div>
-<div class="card"><h2>How it works (DSA pipeline)</h2>
-<p><b>Request → HashMap</b> (blood group) → <b>availability filter</b> → <b>distance</b> (Dijkstra road route, else Haversine) → <b>Min-Heap</b> → <b>nearest-first list</b>.</p>
-<p class="warn">Example from the brief: a patient in Agra needing <b>O+</b> gets compatible donors (O+ and O−) ranked by distance — e.g. Sikandra, Kamla Nagar, Dayal Bagh — with incompatible groups filtered out.</p></div>
-<div class="card"><h2>Quick search</h2>
+<div class="card stat"><h2>{{ stats['d'] }}</h2><p>Registered donors</p></div>
+<div class="card stat"><h2>{{ stats['a'] }}</h2><p>Available now</p></div>
+<div class="card stat"><h2>{{ stats['r'] }}</h2><p>Blood requests</p></div></div>
+
+<div class="card"><h2>How it works</h2>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><h3>Request</h3><p>Enter the blood group needed and the patient's locality.</p></div>
+<div class="step"><div class="step-num">2</div><h3>Match</h3><p>HashMap finds compatible donors instantly, unavailable donors are filtered out.</p></div>
+<div class="step"><div class="step-num">3</div><h3>Rank</h3><p>Dijkstra road distance + Min-Heap puts the nearest donor first.</p></div>
+<div class="step"><div class="step-num">4</div><h3>Contact</h3><p>Reach donors who consented to share their contact details.</p></div>
+</div>
+<p class="warn" style="margin-top:18px">Example: a patient in Agra needing <b>O+</b> gets compatible donors (O+ and O−) ranked by distance — e.g. Sikandra, Kamla Nagar, Dayal Bagh — with incompatible groups filtered out.</p></div>
+
+<div class="grid">
+<div class="card feature"><div class="icon">⚡</div><h3>Fast in emergencies</h3><p>No scrolling through lists — nearest compatible donors first, every time.</p></div>
+<div class="card feature"><div class="icon">🗺️</div><h3>Real road routes</h3><p>Dijkstra on the Agra locality graph, not just straight-line distance.</p></div>
+<div class="card feature"><div class="icon">🔒</div><h3>Privacy-first</h3><p>Phones stay masked unless the donor gave explicit contact consent.</p></div></div>
+
+<div class="card"><h2>Quick search</h2><p class="lead">Pick a blood group and locality to see the nearest donors right away.</p>
 <form action="/find" method="get"><label>Blood group needed</label>
 <select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
 <label>Patient locality (Agra)</label>
 <select name="locality">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
-<button class="btn">Search nearest donors</button></form></div>
+<button class="btn">Search nearest donors →</button></form></div>
 {% endblock %}

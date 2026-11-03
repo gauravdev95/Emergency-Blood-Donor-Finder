@@ -1,5 +1,5 @@
 {% extends "base.html" %}{% block content %}
-<div class="card"><h1>Nearby Donors Map (Agra)</h1><p>Markers = registered donors. Click a marker for group &amp; locality. Phones are masked here unless the donor consented.</p>
+<div class="card"><h1>Nearby Donors Map (Agra)</h1><p class="lead">Markers = registered donors. Click a marker for group &amp; locality. Phones are masked here unless the donor consented.</p>
 <div id="map"></div></div>
 <script>async function load(){const donors=await (await fetch('/api/donors')).json();
 const map=L.map('map').setView([27.20,78.00],12);

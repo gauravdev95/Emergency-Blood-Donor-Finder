@@ -1,10 +1,16 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Emergency Blood Donor Finder — find nearby, available blood donors fast, ranked nearest-first.">
 <title>{% block title %}Emergency Blood Donor Finder{% endblock %}</title>
 <link rel="stylesheet" href="/static/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></head>
-<body><header><span class="logo">🩸 Blood Donor Finder</span>
+<body><header><div class="nav-inner">
+<a class="brand" href="/"><span class="brand-mark">🩸</span> Blood Donor Finder</a>
+<nav>
 <a href="/">Home</a><a href="/register">Register as Donor</a><a href="/request">Blood Request</a>
-<a href="/find">Find Donors</a><a href="/map">Map</a><a href="/admin">Admin</a></header>
+<a href="/find">Find Donors</a><a href="/map">Map</a><a href="/admin">Admin</a>
+</nav></div></header>
 <main>{% block content %}{% endblock %}</main>
-<footer>Donor-discovery &amp; coordination only — not a blood bank. A hospital / licensed blood bank must confirm compatibility, eligibility &amp; suitability before any donation. Never share a donor's phone publicly without their consent.</footer></body></html>
+<footer><div class="footer-inner">Donor-discovery &amp; coordination only — not a blood bank.<br>
+A hospital / licensed blood bank must confirm compatibility, eligibility &amp; suitability before any donation.
+Never share a donor's phone publicly without their consent.</div></footer></body></html>
