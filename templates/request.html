@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>Emergency Blood Request</h1><p id="msg"></p>
+<form id="f"><label>Patient name</label><input name="patient_name" required>
+<label>Blood group needed</label><select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
+<label>Hospital</label><input name="hospital">
+<label>Locality</label><select name="locality">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
+<label>Urgency</label><select name="urgency"><option>Urgent</option><option>Critical</option><option>Normal</option></select>
+<label>Contact (for hospital coordination)</label><input name="contact">
+<button class="btn">Submit request &amp; find donors</button></form></div>
+<script>document.getElementById('f').onsubmit=async e=>{e.preventDefault();
+const d=Object.fromEntries(new FormData(e.target));
+const r=await fetch('/api/requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+const j=await r.json();
+if(r.ok){window.location='/find?blood_group='+encodeURIComponent(d.blood_group)+'&locality='+encodeURIComponent(d.locality);}
+else document.getElementById('msg').textContent='❌ '+(j.error||'Failed');}</script>
+{% endblock %}

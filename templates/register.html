@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>Register as a Donor</h1><p id="msg"></p>
+<form id="f"><label>Name</label><input name="name" required>
+<label>Blood group</label><select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
+<label>Locality (Agra)</label><select name="locality">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
+<label>Phone</label><input name="phone" placeholder="Only shown if you tick consent below">
+<label><input type="checkbox" name="share_contact" value="1" style="width:auto"> I consent to sharing my phone number with verified blood seekers</label>
+<label>Last donation date (optional)</label><input type="date" name="last_donation">
+<button class="btn">Register</button></form></div>
+<script>document.getElementById('f').onsubmit=async e=>{e.preventDefault();
+const d=Object.fromEntries(new FormData(e.target));d.share_contact=e.target.share_contact.checked?1:0;
+const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+const j=await r.json();document.getElementById('msg').textContent=r.ok?'✅ Registered! Donor ID '+j.donor_id:'❌ '+(j.error||'Failed');}</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>Admin Dashboard</h1><p>Verify donors, toggle availability, and track requests. (Demo admin — add login before public deployment.)</p>
+<h2>Donors ({{ donors|length }})</h2>
+<table><tr><th>Name</th><th>Group</th><th>Locality</th><th>Available</th><th>Verified</th><th>Actions</th></tr>
+{% for d in donors %}<tr><td>{{ d.name }}</td><td><span class="badge">{{ d.blood_group }}</span></td><td>{{ d.locality }}</td>
+<td>{{ 'Yes' if d.available else 'No' }}</td><td>{{ 'Yes' if d.verified else 'No' }}</td>
+<td><button onclick="act('/api/donors/{{ d.id }}/verify',{})">Verify</button>
+<button onclick="act('/api/donors/{{ d.id }}/availability',{available:{{ 0 if d.available else 1 }}})">Toggle availability</button></td></tr>{% endfor %}</table>
+<h2>Requests ({{ requests|length }})</h2>
+<table><tr><th>Patient</th><th>Group</th><th>Hospital</th><th>Locality</th><th>Urgency</th><th>Status</th><th>Action</th></tr>
+{% for r in requests %}<tr><td>{{ r.patient_name }}</td><td>{{ r.blood_group }}</td><td>{{ r.hospital }}</td><td>{{ r.locality }}</td><td>{{ r.urgency }}</td><td>{{ r.status }}</td>
+<td><button onclick="act('/api/requests/{{ r.id }}/status',{status:'Completed'})">Mark completed</button></td></tr>{% endfor %}</table></div>
+<script>async function act(u,b){await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});location.reload();}</script>
+{% endblock %}

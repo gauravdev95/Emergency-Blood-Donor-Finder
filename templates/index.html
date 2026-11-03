@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<div class="hero"><h1>Find a blood donor fast, in an emergency.</h1>
+<p>Search by blood group and location. Donors are ranked nearest-first using a HashMap lookup, Dijkstra road routes and a Min-Heap.</p>
+<a class="btn2" href="/find">🔍 Find Donors Now</a> &nbsp; <a class="btn2" href="/register">❤️ Register as Donor</a></div>
+<div class="grid">
+<div class="card"><h2>{{ stats['d'] }}</h2><p>Registered donors</p></div>
+<div class="card"><h2>{{ stats['a'] }}</h2><p>Available now</p></div>
+<div class="card"><h2>{{ stats['r'] }}</h2><p>Blood requests</p></div></div>
+<div class="card"><h2>How it works (DSA pipeline)</h2>
+<p><b>Request → HashMap</b> (blood group) → <b>availability filter</b> → <b>distance</b> (Dijkstra road route, else Haversine) → <b>Min-Heap</b> → <b>nearest-first list</b>.</p>
+<p class="warn">Example from the brief: a patient in Agra needing <b>O+</b> gets compatible donors (O+ and O−) ranked by distance — e.g. Sikandra, Kamla Nagar, Dayal Bagh — with incompatible groups filtered out.</p></div>
+<div class="card"><h2>Quick search</h2>
+<form action="/find" method="get"><label>Blood group needed</label>
+<select name="blood_group">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
+<label>Patient locality (Agra)</label>
+<select name="locality">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
+<button class="btn">Search nearest donors</button></form></div>
+{% endblock %}

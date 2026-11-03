@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>Find Nearest Donors</h1>
+<form id="f"><label>Blood group needed</label><select name="blood_group" id="bg">{% for g in groups %}<option>{{ g }}</option>{% endfor %}</select>
+<label>Patient locality</label><select name="locality" id="loc">{% for p in places %}<option>{{ p }}</option>{% endfor %}</select>
+<label><input type="checkbox" id="exact" style="width:auto"> Exact blood group only (skip other compatible groups)</label>
+<button class="btn">Search</button></form></div>
+<div id="out"></div>
+<script>async function search(){const bg=document.getElementById('bg').value,loc=document.getElementById('loc').value;
+const ex=document.getElementById('exact').checked?'&exact_only=1':'';
+const r=await fetch(`/api/search?blood_group=${bg}&locality=${encodeURIComponent(loc)}${ex}`);
+const j=await r.json();const out=document.getElementById('out');
+if(!r.ok){out.innerHTML=`<div class="card">❌ ${j.error}</div>`;return;}
+if(!j.count){out.innerHTML=`<div class="card"><h2>No matching donors found</h2><p>Try another locality, or submit a <a href="/request">blood request</a> so admin can help coordinate.</p></div>`;return;}
+out.innerHTML=`<div class="card"><h2>${j.count} donor(s) for ${j.blood_group}</h2><p>Compatible groups: ${j.compatible_groups.join(', ')} — ranked nearest-first.</p>
+<table><tr><th>Donor</th><th>Group</th><th>Locality</th><th>Distance</th><th>Route / method</th><th>Contact</th></tr>`+
+j.donors.map(d=>`<tr><td>${d.name}</td><td><span class="badge">${d.blood_group}</span></td><td>${d.locality||''}</td><td>${d.distance_km??'—'} km</td><td>${(d.route||[]).join(' → ')}<br><small>${d.distance_method}</small></td><td>${d.phone_display}</td></tr>`).join('')+`</table></div>`;}
+document.getElementById('f').onsubmit=e=>{e.preventDefault();search();};
+const q=new URLSearchParams(location.search);if(q.get('blood_group'))document.getElementById('bg').value=q.get('blood_group');
+if(q.get('locality'))document.getElementById('loc').value=q.get('locality');if(q.get('blood_group'))search();</script>
+{% endblock %}
