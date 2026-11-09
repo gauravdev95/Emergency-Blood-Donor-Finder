@@ -111,5 +111,49 @@ class TestAPI(unittest.TestCase):
         appmod.DB = original  # restore so tearDown deletes the setUp DB
 
 
+class TestAdminGuard(unittest.TestCase):
+    """Admin mutation endpoints require ADMIN_API_TOKEN once configured."""
+
+    def setUp(self):
+        fd, path = tempfile.mkstemp(suffix=".db")
+        os.close(fd)
+        appmod.DB = path
+        appmod.init_db()
+        appmod.app.config["TESTING"] = True
+        self.client = appmod.app.test_client()
+        self.client.post("/api/register", json={"name": "Test O", "blood_group": "O+",
+                                                "locality": "Sikandra", "phone": "9999999999",
+                                                "share_contact": 1})
+        self._original_token = appmod.ADMIN_API_TOKEN
+        appmod.ADMIN_API_TOKEN = "test-admin-token"
+
+    def tearDown(self):
+        appmod.ADMIN_API_TOKEN = self._original_token
+        os.unlink(appmod.DB)
+
+    def test_verify_requires_admin_token(self):
+        r = self.client.post("/api/donors/1/verify")
+        self.assertEqual(r.status_code, 401)
+        r = self.client.post("/api/donors/1/verify", headers={"X-Admin-Token": "wrong"})
+        self.assertEqual(r.status_code, 401)
+        r = self.client.post("/api/donors/1/verify", headers={"X-Admin-Token": "test-admin-token"})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json["verified"], 1)
+
+    def test_availability_requires_admin_token(self):
+        r = self.client.post("/api/donors/1/availability", json={"available": 0})
+        self.assertEqual(r.status_code, 401)
+        r = self.client.post("/api/donors/1/availability", json={"available": 0},
+                             headers={"X-Admin-Token": "test-admin-token"})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json["available"], 0)
+
+    def test_admin_endpoints_open_when_token_unset(self):
+        # Guard inert without ADMIN_API_TOKEN (local dev / existing tests).
+        appmod.ADMIN_API_TOKEN = ""
+        r = self.client.post("/api/donors/1/verify")
+        self.assertEqual(r.status_code, 200)
+
+
 if __name__ == "__main__":
     unittest.main()

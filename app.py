@@ -22,6 +22,34 @@ from dsa import (PLACES, VALID_GROUPS, compatible_groups, find_nearest_donors,
 BASE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(BASE, "blood_donors.db")
 app = Flask(__name__)
+# Needed only for the optional session-based admin flag (see require_admin).
+# The dev default is NOT a secret — set FLASK_SECRET_KEY in production.
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-change-me")
+
+# Admin guard for mutation endpoints (/api/donors/<id>/verify,
+# /api/donors/<id>/availability). Set ADMIN_API_TOKEN in the environment
+# (or .env) and send it as the X-Admin-Token header. While the token is
+# unset the guard is inert, so local demos and the existing test suite keep
+# working — a public deployment MUST set it, otherwise anyone can verify
+# donors or flip availability. A Flask session flagged is_admin (set by a
+# future admin login) is accepted as an alternative to the header.
+ADMIN_API_TOKEN = os.environ.get("ADMIN_API_TOKEN", "")
+
+
+def require_admin():
+    """Return a 401 JSON response unless the caller is an admin, else None."""
+    from flask import session
+
+    if not ADMIN_API_TOKEN:
+        return None  # guard not configured (local dev / tests)
+    try:
+        if session.get("is_admin"):
+            return None
+    except RuntimeError:
+        pass  # no usable session (e.g. no secret key) — fall through to header
+    if request.headers.get("X-Admin-Token") == ADMIN_API_TOKEN:
+        return None
+    return jsonify({"error": "Admin token required."}), 401
 
 
 def db():
@@ -184,6 +212,9 @@ def api_requests():
 
 @app.route("/api/donors/<int:donor_id>/availability", methods=["POST"])
 def api_availability(donor_id):
+    denied = require_admin()
+    if denied is not None:
+        return denied
     data = request.get_json(force=True, silent=True) or {}
     avail = 1 if str(data.get("available", "1")) in ("1", "true", "on") else 0
     cur = db().execute("UPDATE donors SET available=? WHERE id=?", (avail, donor_id))
@@ -195,6 +226,9 @@ def api_availability(donor_id):
 
 @app.route("/api/donors/<int:donor_id>/verify", methods=["POST"])
 def api_verify(donor_id):
+    denied = require_admin()
+    if denied is not None:
+        return denied
     cur = db().execute("UPDATE donors SET verified=1 WHERE id=?", (donor_id,))
     db().commit()
     if cur.rowcount == 0:
